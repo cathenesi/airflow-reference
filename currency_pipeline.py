@@ -7,6 +7,7 @@ from datetime import timedelta, datetime
 
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
+from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
 
 
@@ -30,6 +31,7 @@ default_args = {
 # [START instantiate_dag]
 with DAG(
     'currency',
+    catchup=False,
     default_args=default_args,
     schedule_interval='*/10 * * * *',
     description='Pull data about currency quote'
@@ -41,10 +43,10 @@ with DAG(
 # [START documentation]
 dag.doc_md = __doc__
 
-t1.doc_md = """\
-#### Currency DAG
-It gets data about currency on internet
+task_1.doc_md = """\
+#### Log the begin of the process
+Log...
 """
 # [END documentation]
 
-task_1 >> [task_2, task_3]
+task_1 >> task_2 >> task_3
