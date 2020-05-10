@@ -14,8 +14,8 @@ url = 'http://data.fixer.io/api/latest?access_key=2ab66baeac1f3a999488b301c91f9c
 headers = {'Content-type': 'application/json'}
 
 
-def pull_data(currency):
-    print("Pulling data", currency)
+def pull_data():
+    print("Pulling data")
     response = requests.post(url, headers=headers)
     if response.status_code == 200:
         print(response.text)
@@ -29,8 +29,8 @@ default_args = {
     'start_date': datetime(2020, 5, 10, 00, 00, 00),
     'concurrency': 1,
     'email': ['cathenesi@gmail.com'],
-    'email_on_failure': True,
-    'email_on_retry': True,
+    'email_on_failure': False,
+    'email_on_retry': False,
     'retries': 4,
     'retry_delay': timedelta(minutes=5)
 }
@@ -45,8 +45,8 @@ with DAG(
     description='Pull data about currency quote'
 ) as dag:
     task_1 = BashOperator(task_id='start_log', bash_command='echo ">>> Log: start pulling currency"')
-    task_2 = PythonOperator(task_id='pull_USD_data', python_callable=pull_data('USD'))
-    task_3 = PythonOperator(task_id='pull_EUR_data', python_callable=pull_data('EUR'))
+    task_2 = PythonOperator(task_id='pull_USD_data', python_callable=pull_data)
+    task_3 = PythonOperator(task_id='pull_EUR_data', python_callable=pull_data)
     task_4 = BashOperator(task_id='end_log', bash_command='echo ">>> Log: Ending pulling currency"')
 
 # [START documentation]
