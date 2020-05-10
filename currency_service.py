@@ -34,7 +34,7 @@ def get_data(currency: Currency):
 
 
 def write(date, currency: Currency, currency_quote: float):
-    file = open("$AIRFLOW_HOME/currency_data/{}-{}.txt".format(currency, date), "a")
+    file = open("/home/pi/airflow/currency_data/{}-{}.txt".format(currency, date), "a")
     file.write("{} - {} \n".format(datetime.now(), currency_quote))
     print(date, currency_quote)
     file.close()
