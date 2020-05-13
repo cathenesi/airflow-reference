@@ -40,7 +40,8 @@ with DAG(
                                          "currency_apikey": "{{var.value.currency_apikey}}"},
                               python_callable=get_usd)
     task_1_3 = PythonOperator(task_id="queue_USD_data",
-                              op_kwargs={"currency_filename": "{{var.value.currency_filename}}"},
+                              op_kwargs={"currency_filename": "{{var.value.currency_filename}}",
+                                         "currency_queue_host": "{{var.value.currency_queue_host}}"},
                               python_callable=queue_usd)
     # euro
     task_2_1 = BashOperator(task_id="start_eur", bash_command="echo '>>> Log: start collecting euro data'")
@@ -49,7 +50,8 @@ with DAG(
                                          "currency_apikey": "{{var.value.currency_apikey}}"},
                               python_callable=get_eur)
     task_2_3 = PythonOperator(task_id="queue_EUR_data",
-                              op_kwargs={"currency_filename": "{{var.value.currency_filename}}"},
+                              op_kwargs={"currency_filename": "{{var.value.currency_filename}}",
+                                         "currency_queue_host": "{{var.value.currency_queue_host}}"},
                               python_callable=queue_eur)
 
     # end
