@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+"""
+Serviço para conexão à API
+"""
+
 import requests
 from datetime import datetime
 from currency import Currency

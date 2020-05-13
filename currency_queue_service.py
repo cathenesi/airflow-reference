@@ -1,4 +1,8 @@
-from datetime import datetime
+# -*- coding: utf-8 -*-
+"""
+Serviço para conexão ao broker de mensagens
+"""
+
 from currency import Currency
 import pika
 
