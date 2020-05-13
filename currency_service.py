@@ -33,21 +33,22 @@ def get_data(currency: Currency):
     return result_date, result_quote
 
 
-def write(date, currency: Currency, currency_quote: float):
-    file = open("/home/pi/airflow/currency_data/{}-{}.txt".format(currency, date), "a")
-    file.write("{} - {} \n".format(datetime.now(), currency_quote))
+def write_to_file(date, currency: Currency, currency_quote: float):
+    # from aurflow var CURRENCY_FILENAME
+    file = open("{{CURRENCY_FILENAME}}".format(currency), "w")
+    file.write("{} | {} | {} \n".format(datetime.now(), date, currency_quote))
     print(date, currency_quote)
     file.close()
 
 
 def get_eur():
     date, currency_quote = get_data(Currency.EUR)
-    write(date, Currency.EUR, currency_quote)
+    write_to_file(date, Currency.EUR, currency_quote)
 
 
 def get_usd():
     date, currency_quote = get_data(Currency.USD)
-    write(date, Currency.USD, currency_quote)
+    write_to_file(date, Currency.USD, currency_quote)
 
 
 if __name__ == '__main__':
