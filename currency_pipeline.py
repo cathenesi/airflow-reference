@@ -55,7 +55,7 @@ with DAG(
                               python_callable=queue_eur)
 
     # end
-    task_3 = BashOperator(task_id="end_log", bash_command="echo '>>> Log: Ending pulling currency'")
+    task_3 = BashOperator(task_id="end", bash_command="echo '>>> Log: Ending pulling currency'")
 # [END instanciação]
 
 # [START documentação]

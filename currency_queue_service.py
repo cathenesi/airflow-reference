@@ -20,7 +20,7 @@ def queue(currency_queue_host, date, currency: Currency, currency_quote):
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=currency_queue_host))
     channel = connection.channel()
     channel.queue_declare(queue="home.app.currency", durable=True)
-    body = "{}'date': {}, 'currency': {}, 'currency_quote': {}{}".format("{", date, str(currency), currency_quote, "}")
+    body = "{}'date': {}, 'currency': {}, 'currency_quote': {}{}".format("{", date, currency.value, currency_quote, "}")
     print(body)
     channel.basic_publish(exchange="", routing_key="home.app.currency", body=body)
     connection.close()
