@@ -33,23 +33,23 @@ def get_data(currency: Currency):
     return result_date, result_quote
 
 
-def write_to_file(date, currency: Currency, currency_quote: float):
+def write_to_file(currency_filename, date, currency: Currency, currency_quote: float):
     # from aurflow var CURRENCY_FILENAME
-    filename = "{{var.value.CURRENCY_FILENAME}}".format(currency);
+    filename = currency_filename.format(currency)
     file = open(filename, "w")
     file.write("{} | {} | {} \n".format(datetime.now(), date, currency_quote))
     print("writing file", filename, date, currency_quote)
     file.close()
 
 
-def get_eur():
+def get_eur(currency_filename):
     date, currency_quote = get_data(Currency.EUR)
-    write_to_file(date, Currency.EUR, currency_quote)
+    write_to_file(currency_filename, date, Currency.EUR, currency_quote)
 
 
-def get_usd():
+def get_usd(currency_filename):
     date, currency_quote = get_data(Currency.USD)
-    write_to_file(date, Currency.USD, currency_quote)
+    write_to_file(currency_filename, date, Currency.USD, currency_quote)
 
 
 if __name__ == '__main__':

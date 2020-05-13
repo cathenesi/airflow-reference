@@ -34,8 +34,12 @@ with DAG(
     description='Pull data about currency quote'
 ) as dag:
     task_1 = BashOperator(task_id='start_log', bash_command='echo ">>> Log: start pulling currency"')
-    task_2 = PythonOperator(task_id='get_USD_data', python_callable=get_usd)
-    task_3 = PythonOperator(task_id='get_EUR_data', python_callable=get_eur)
+    task_2 = PythonOperator(task_id='get_USD_data',
+                            op_kwargs={'currency_filename': '{{var.value.currency_filename}}'},
+                            python_callable=get_usd)
+    task_3 = PythonOperator(task_id='get_EUR_data',
+                            op_kwargs={'currency_filename': '{{var.value.currency_filename}}'},
+                            python_callable=get_eur)
     task_4 = BashOperator(task_id='end_log', bash_command='echo ">>> Log: Ending pulling currency"')
 # [END instanciação]
 
