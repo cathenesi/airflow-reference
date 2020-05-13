@@ -35,9 +35,10 @@ def get_data(currency: Currency):
 
 def write_to_file(date, currency: Currency, currency_quote: float):
     # from aurflow var CURRENCY_FILENAME
-    file = open("{{CURRENCY_FILENAME}}".format(currency), "w")
+    filename = "{{CURRENCY_FILENAME}}".format(currency);
+    file = open(filename, "w")
     file.write("{} | {} | {} \n".format(datetime.now(), date, currency_quote))
-    print(date, currency_quote)
+    print("writing file", filename, date, currency_quote)
     file.close()
 
 
