@@ -38,11 +38,13 @@ def write_to_file(currency_filename, date, currency: Currency, currency_quote: f
 
 
 def get_usd(currency_filename, currency_apikey):
+    print(currency_filename, currency_apikey)
     date, currency_quote = get_data(currency_apikey, Currency.USD)
     write_to_file(currency_filename, date, Currency.USD, currency_quote)
 
 
 def get_eur(currency_filename, currency_apikey):
+    print(currency_filename, currency_apikey)
     date, currency_quote = get_data(currency_apikey, Currency.EUR)
     write_to_file(currency_filename, date, Currency.EUR, currency_quote)
 
