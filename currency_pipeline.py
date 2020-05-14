@@ -9,8 +9,15 @@ import requests
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
+from airflow.models import Variable
+from datetime import datetime
 from currency_api_service import get_eur, get_usd
 from currency_queue_service import queue_usd, queue_eur
+
+
+def update_lastrun_time():
+    Variable.set_val("currency_lastrun", datetime.now())
+
 
 # [START argumentos da DAG]
 default_args = {
@@ -54,8 +61,11 @@ with DAG(
                                          "currency_queue_host": "{{var.value.currency_queue_host}}"},
                               python_callable=queue_eur)
 
+    task_3 = PythonOperator(task_id="update_lastrun_time",
+                            python_callable=update_lastrun_time)
+
     # end
-    task_3 = BashOperator(task_id="end", bash_command="echo '>>> Log: Ending pulling currency'")
+    task_4 = BashOperator(task_id="end", bash_command="echo '>>> Log: Ending pulling currency'")
 # [END instanciação]
 
 # [START documentação]
@@ -92,6 +102,11 @@ Rabbit MQ
 """
 
 task_3.doc_md = """\
+#### Update last run
+Saves the last run datetime
+"""
+
+task_4.doc_md = """\
 #### Log the end of the process
 Just a bash log
 """
@@ -99,3 +114,4 @@ Just a bash log
 
 # [Ordem das tasks]
 task_1_1 >> task_1_2 >> task_1_3 >> task_3 << task_2_3 << task_2_2 << task_2_1
+task_3 >> task_4
