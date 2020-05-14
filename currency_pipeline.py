@@ -16,7 +16,7 @@ from currency_queue_service import queue_usd, queue_eur
 
 
 def update_lastrun_time():
-    Variable.set_val("currency_lastrun", datetime.now())
+    Variable.set_val("currency_lastrun", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 
 # [START argumentos da DAG]
